@@ -21,7 +21,7 @@
         *	4.1.5.	[Result 结果](#result)  
         *	4.1.6.	[Context 上下文](#context)  
         *	4.1.7.	[Timestamp 时间戳](#timestamp)  
-        *	4.1.8.	[Stored](#stored)  
+        *	4.1.8.	[Stored LRS系统自动记录的时间戳](#stored)  
         *	4.1.9.	[Authority](#authority)  
         *	4.1.10.	[Version](#version)  
         *	4.1.11.	[Attachments](#attachments)  
