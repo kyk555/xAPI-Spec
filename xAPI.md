@@ -1,46 +1,32 @@
-# Experience API 00000000000000000
+# Experience API 
 ## Advanced Distributed Learning (ADL) Co-Laboratories
 
->"Copyright 2013 Advanced Distributed Learning (ADL) Initiative, U.S. Department of Defense
 
->Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except 
->in compliance with the License. You may obtain a copy of the License at
->http://www.apache.org/licenses/LICENSE-2.0
 
->Unless required by applicable law or agreed to in writing, software distributed under the License 
->is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express 
->or implied. See the License for the specific language governing permissions and limitations under 
->the License."
-
->This document was authored by members of the Experience API Working Group (see 
->list on pp. 7-8) in support of the Office of the Deputy Assistant Secretary of 
->Defense (Readiness) Advanced Distributed Learning (ADL) Initiative. Please 
->send all feedback and inquiries to helpdesk@adlnet.gov  
-
-## Table of Contents
-*	1.0.	[Revision History](#revhistory)  
+## 目录
+*	1.0.	[版本历史](#revhistory)  
 *	2.0.	[Role of the Experience API](#roleofxapi)
 	*	2.1.	[ADL's Role in the Experience API](#adlrole)  
  	*	2.2.	[Contributors](#contributors)
  		*	2.2.1.	[Working Group Participants](#wg)  
 		*	2.2.2.	[Requirements Gathering Participants](#reqparticipants) 
 	*	2.3.	[Reading Guidelines for the Non-Technically Inclined](#readingguidelines)
-*	3.0.	[Definitions](#definitions)  
-*	4.0.	[Statement](#statement)  
-    *	4.1.	[Statement Properties](#stmtprops)  
+*	3.0.	[概念定义](#definitions)  
+*	4.0.	[行为数据记录](#statement)  
+    *	4.1.	[行为数据记录属性 Statement Properties](#stmtprops)  
         *	4.1.1.	[ID](#stmtid)  
-        *	4.1.2.	[Actor](#actor)  
-        *	4.1.3.	[Verb](#verb)  
-        *	4.1.4.	[Object](#object)  
-        *	4.1.5.	[Result](#result)  
-        *	4.1.6.	[Context](#context)  
-        *	4.1.7.	[Timestamp](#timestamp)  
+        *	4.1.2.	[Actor 参与者](#actor)  
+        *	4.1.3.	[Verb 动作](#verb)  
+        *	4.1.4.	[Object 作用对象](#object)  
+        *	4.1.5.	[Result 结果](#result)  
+        *	4.1.6.	[Context 上下文](#context)  
+        *	4.1.7.	[Timestamp 时间戳](#timestamp)  
         *	4.1.8.	[Stored](#stored)  
         *	4.1.9.	[Authority](#authority)  
         *	4.1.10.	[Version](#version)  
         *	4.1.11.	[Attachments](#attachments)  
         *	4.1.12.	[Data Constraints](#dataconstraints)  
-    *	4.2.	[Retrieval of Statements](#retstmts)  
+    *	4.2.	[Retrieval of Statements 行为数据记录检索](#retstmts)  
 	*	4.3.	[Voided](#voided)  
 	*	4.4.	[Signed Statements](#signature)  
 *	5.0.	[Miscellaneous Types](#misctypes)  
@@ -48,27 +34,27 @@
     *	5.2.	[Language Map](#misclangmap)  
     *	5.3.	[Extensions](#miscext)  
     *	5.4.	[Identifier Metadata](#miscmeta)  
-*	6.0.	[Run-time Communication](#rtcom)  
+*	6.0.	[Run-time Communication 运行时通信](#rtcom)  
     *	6.1.	[Encoding](#encoding)  
     *	6.2.	[API Versioning](#apiversioning)  
-    *	6.3.	[Concurrency](#concurrency)  
-    *	6.4.	[Security](#security)  
+    *	6.3.	[Concurrency 并发处理](#concurrency)  
+    *	6.4.	[Security 安全](#security)  
 		*	6.4.1.	[Process for Each Scenario](#authdefs)  
 		*	6.4.2.	[OAuth Authorization Scope](#oauthscope)  
-*	7.0.	[Data Transfer (REST)](#datatransfer)  
-    *	7.1.	[Error Codes](#errorcodes)  
-    *	7.2.	[Statement API](#stmtapi)
+*	7.0.	[Data Transfer (REST) 数据传输-REST](#datatransfer)  
+    *	7.1.	[Error Codes 错误码](#errorcodes)  
+    *	7.2.	[Statement API 行为记录API](#stmtapi)
     	*	7.2.1. [PUT Statements](#stmtapiput)
     	*	7.2.2. [POST Statements](#stmtapipost)
     	*	7.2.3. [GET Statements](#stmtapiget)
     	*	7.2.4. [Voided Statements](#voidedStatements)	  
-    *	7.3.	[Document APIs](#docapis)  
-    *	7.4.	[State API](#stateapi)  
+    *	7.3.	[Document APIs 文档API](#docapis)  
+    *	7.4.	[State API 状态API](#stateapi)  
     *	7.5.	[Activity Profile API](#actprofapi)  
     *	7.6.	[Agent Profile API](#agentprofapi)  
     *	7.7.	[About resource](#aboutresource)  
-    *	7.8.	[Cross Origin Requests](#cors)  
-    *	7.9.	[Validation](#validation)  
+    *	7.8.	[Cross Origin Requests 跨域请求](#cors)  
+    *	7.9.	[Validation 校验](#validation)  
     *	7.10.	[HTTP HEAD](#httphead)  
 *	[Appendix A: Example Statements](#AppendixA)  
 *	[Appendix B: Example statement objects of different types](#AppendixB)  
@@ -133,167 +119,32 @@ Clarifications and additional examples including:
 
 ## 2.0 Role of the Experience API  
 The Experience API is a service that allows for statements of experience
-to be delivered to and stored securely in a Learning Record Store (LRS). These statements
-of experience are typically learning experiences, but the API can address statements
-of any kind of experience. The Experience API is dependent on Activity Providers to 
-create and track these learning experiences; this specification provides a data model and 
-associated components on how to accomplish these tasks.
-
-Specifically, the Experience API provides:  
+to be delivered to and stored securely in a Learning Record Store (LRS). 
+Experience API 是一种在LRS中安全记录和传递体验记录的服务。
+其主要用于记录学习体验/行为数据，也支持记录任意形式的行为数据。
+X-API依赖Activity Providers(AP 活动提供者)来创建和跟踪要记录的学习体验数据。
+X-API规范提供一个数据模型以及相关的服务组件达到这些任务。
+X-API主要提供：
 
 * The structure and definition of Statement, State, Learner, Activity and Objects,
-which are the means by which experiences are conveyed by an Activity Provider.
+which are the means by which experiences are conveyed by an Activity Provider.(描述Activity Provider传递的体验相关的概念定义和结构描述，包括：Statement, State, Learner, Activity and Objects)
 
 * Data Transfer methods for the storage and retrieval (but not validation) of
 these Objects to/from a Learning Record Store.  Note that the systems storing 
 or retrieving records need not be Activity Providers. LRSs can 
-communicate with other LRSs, or reporting systems.
+communicate with other LRSs, or reporting systems. (用于向LSR存储或检索体验数据的方法)
 
 * Security methods allowing for the trusted exchange of information between
-the Learning Record Store and trusted sources.  
+the Learning Record Store and trusted sources.  （提供安全可靠的方法，在可信的数据源与LRS之间交换信息）
 
 The Experience API is the first of many envisioned technologies that will enable
-a richer architecture of online learning and training. Authentication
-services, querying services, visualization services, and personal data services 
-are some examples of additional technologies which the Experience API is designed
-to support. While the implementation details of these services are not specified here,
+a richer architecture of online learning and training. 
+Authentication services （认证服务）, 
+querying services（查询服务）, visualization services（可视化服务）, and personal data services （个人数据服务）
+are some examples of additional technologies which the Experience API is designed to support. 
+While the implementation details of these services are not specified here,
 the Experience API is designed with this larger architectural vision in mind.
  
-<a name="adlrole"/>
-
-### 2.1 ADL's Role in the Experience API  
-The Advanced Distributed Learning (ADL) Initiative has taken on the roles of steward and facilitator 
-in the development of the Experience API.  The Experience API is seen as one piece of the ADL Training 
-and Learning Architecture, which facilitates learning anytime and anywhere. ADL views the Experience API 
-as an evolved version of Sharable Content Object Reference Model (SCORM) that can support similar use cases, but can also support many of the use 
-cases gathered by ADL and submitted by those involved in distributed learning that SCORM could not 
-enable.  
- 
-<a name="contributors"/> 
-
-### 2.2 Contributors
-> _"My thanks to everyone who contributed to the Experience API project. Many of 
-you have called into the weekly meetings and helped to shape the specification 
-into something that is useful for the entire distributed learning community. 
-Many of you assisted in releasing code samples, products, and documentation to 
-aid those who are creating and adopting the specification.  I'd also like to 
-thank all of those who were involved in supplying useful, honest information 
-about your organization's use of SCORM and other learning best practices. 
-Through the use-cases, shared experiences, and knowledge you have shared, ADL 
-and the community clearly identified the first step in creating the Training 
-and Learning Architecture--the Experience API.  You are truly the community 
-leaders on which we depend to make our training and education the very best."_ 
-
-Kristy S. Murray, Ed.D.  
-Director, ADL Initiative  
-OSD, Training Readiness & Strategy (TRS)  
-
-<a name="wg"/>
-
-### 2.2.1 Working Group Participants  
-<table>
-	<tr><th>Name</th><th>Organization</th></tr>
-	<tr><td>Aaron Silvers</td><td>ADL</td></tr>
-	<tr><td>Al Bejcek</td><td>NetDimensions</td></tr>
-	<tr><td>Ali Shahrazad</td><td>SaLTBOX</td></tr>
-	<tr><td>Andrew Downes</td><td>Rustici Software</td></tr>
-	<tr><td>Andy Johnson</td><td>ADL</td></tr>
-	<tr><td>Andy Whitaker</td><td>Rustici Software</td></tr>
-	<tr><td>Anthony Altieri</td><td>American Red Cross</td></tr>
-	<tr><td>Anto Valan</td><td>Omnivera Learning Solutions</td></tr>
-	<tr><td>Avron Barr</td><td>Aldo Ventures, Inc.</td></tr>
-	<tr><td>Ben Clark</td><td>Rustici Software</td></tr>
-	<tr><td>Bill McDonald</td><td>Boeing</td></tr>
-	<tr><td>Brian J. Miller</td><td>Rustici Software</td></tr>
-	<tr><td>Chad Udell</td><td>Float Mobile Learning</td></tr>
-	<tr><td>Chris Handorf</td><td>Pearson</td></tr>
-	<tr><td>Chris Sawwa</td><td>Meridian Knowledge Solutions</td></tr>
-	<tr><td>Dan Allen</td><td>Litmos</td></tr>
-	<tr><td>Dan Kuemmel</td><td>Sentry Insurance</td></tr>
-	<tr><td>Dave Mozealous</td><td>Articulate</td></tr>
-	<tr><td>David Ells</td><td>Rustici Software</td></tr>
-	<tr><td>David N. Johnson</td><td>Clear Learning Systems</td></tr>
-	<tr><td>Doug Hagy</td><td>Twin Lakes Consulting Corporation</td></tr>
-	<tr><td>Eric Johnson</td><td>Planning and Learning Technologies, Inc.</td></tr>
-	<tr><td>Fiona Leteney</td><td>Feenix e-learning</td></tr>
-	<tr><td>Greg Tatka</td><td>Menco Social Learning</td></tr>
-	<tr><td>Ingo Dahn</td><td>University Koblenz-Landau</td></tr>
-	<tr><td>Jason Haag</td><td>ADL</td></tr>
-	<tr><td>Jeff Place</td><td>Questionmark</td></tr>
-	<tr><td>Jennifer Cameron</td><td>Sencia Corporate Web Solutions</td></tr>
-	<tr><td>Jeremy Brockman</td><td> </td></tr>
-	<tr><td>Jhorlin De Armas</td><td>Riptide Software</td></tr>
-	<tr><td>Joe Gorup</td><td>CourseAvenue</td></tr>
-	<tr><td>John Kleeman</td><td>Questionmark</td></tr>
-	<tr><td>Jonathan Archibald</td><td>Brightwave</td></tr>
-	<tr><td>Jonathan Poltrack</td><td>ADL</td></tr>
-	<tr><td>Kris Miller</td><td>edcetra Training</td></tr>
-	<tr><td>Kris Rockwell</td><td>Hybrid Learning Systems</td></tr>
-	<tr><td>Lang Holloman</td><td> </td></tr>
-	<tr><td>Lou Wolford</td><td>ADL</td></tr>
-	<tr><td>Luke Hickey</td><td>dominKnow</td></tr>
-	<tr><td>Marcus Birtwhistle</td><td>ADL</td></tr>
-	<tr><td>Mark Davis</td><td>Exambuilder</td></tr>
-	<tr><td>Matteo Scaramuccia</td><td> </td></tr>
-	<tr><td>Megan Bowe</td><td>Rustici Software</td></tr>
-	<tr><td>Melanie VanHorn</td><td>ADL</td></tr>
-	<tr><td>Michael Flores</td><td>Here Everything's Better</td></tr>
-	<tr><td>Michael Roberts</td><td>vTrainingRoom</td></tr>
-	<tr><td>Mike Palmer</td><td>OnPoint Digital</td></tr>
-	<tr><td>Mike Rustici</td><td>Rustici Software</td></tr>
-	<tr><td>Nick Washburn</td><td>Riptide Software</td></tr>
-	<tr><td>Nikolaus Hruska</td><td>ADL</td></tr>
-	<tr><td>Pankaj Agrawal</td><td>Next Software Solutions</td></tr>
-	<tr><td>Patrick Kedziora</td><td>Kedzoh</td></tr>
-	<tr><td>Paul Esch</td><td>Nine Set</td></tr>
-	<tr><td>Paul Roberts</td><td>Questionmark</td></tr>
-	<tr><td>Rich Chetwynd</td><td>Litmos</td></tr>
-	<tr><td>Richard Fouchaux</td><td>Ontario Human Rights  Commission</td></tr>
-	<tr><td>Richard Lenz</td><td>Organizational Strategies, Inc.</td></tr>
-	<tr><td>Rick Raymer</td><td></td></tr>
-	<tr><td>Rob Chadwick</td><td>ADL</td></tr>
-	<tr><td>Robert Lowe</td><td>NetDimensions</td></tr>
-	<tr><td>Russell Duhon</td><td>SaLTBOX</td></tr>
-	<tr><td>Stephen Trevorrow</td><td>Problem Solutions, LLC.</td></tr>
-	<tr><td>Steve Baumgartner</td><td></td></tr>
-	<tr><td>Steve Flowers</td><td>XPConcept</td></tr>
-	<tr><td>Thomas Ho</td><td></td></tr>
-	<tr><td>Tim Martin</td><td>Rustici Software</td></tr>
-	<tr><td>Tom Creighton</td><td>ADL</td></tr>
-	<tr><td>Walt Grata</td><td>ADL</td></tr>
-</table> 
-
-<a name="reqparticipants"/> 
-
-#### 2.2.2 Requirements Gathering Participants  
-In collection of requirements for the Experience API, many people and 
-organizations provided invaluable feedback to the SCORM, distributed learning efforts, and learning technology
-efforts in general.  While not an exhaustive listing, the white papers gathered 
-in 2008 by the Learning Education and Training Standards Interoperability (LETSI) 
-group, the Rustici Software _UserVoice_ website, one-on-one interviews and various
-blogs were important sources from which requirements were gathered for the 
-Experience API specification.
-
-<a name="readingguidelines"/> 
-
-### 2.3 Reading Guidelines for the Non-Technically Inclined
-
-This is a definitive document which describes how the Experience API is to be implemented
-across a variety of systems. It is a technical document authored specifically for individuals 
-and organizations implementing this technology with the intent of such individuals 
-developing interoperable tools, systems and services that are independent of each other 
-and interoperable with each other. 
-
-Whenever possible, the language and formatting used in this document is intended to be 
-_considerate_ of non-technical readers because various tools, systems and services 
-are based on the specification set described below. For this reason, sections that provide a 
-_high-level overview_ of a given facet of the Experience API are labeled **description** or 
-**rationale**. Items in this document labeled as **requirements**, **details** or **examples** are more technical.
-
-As a rule of thumb, if the guideline appears technical or seems to be a requirement, interpret it 
-as such. This is especially true of longer, more, detailed explanations and of tables, each of which would 
-be unintuitive and/or lengthy to dissect into a list of requirements.
-
 <a name="definitions"/>
  
 ## 3.0 Definitions  
